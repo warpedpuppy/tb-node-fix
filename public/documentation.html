@@ -4,9 +4,96 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Action-Comedy API</title>
+        <title>Action API</title>
     </head>
     <body>
-        <p>This API will allow users to access information about movies that are both action and comedies.</p>
+        <header>
+            <h1>Movies API</h1>
+            <h2>This is a REST API using Node.js</h2>
+        </header>
+
+        <section>
+            <h3>Objective</h3>
+            <p>Build a server-side component of a movie web app.</p>
+            <p>This web app will give users access to info about action movies such as their directors and sub-genres.</p>
+            <p>Users will also be able to sign up on the site and create a favorites list.</p>
+        </section>
+
+        <!-- Table for formatting the HTTP req's and res's -->
+        <section>
+            <table>
+                <tr>
+                    <th>Business Logic</th>
+                    <th>URL Endpoint</th>
+                    <th>HTTP Method</th>
+                    <th>Request Body</th>
+                    <th>Response Body</th>
+                </tr>
+
+                <tr>
+                    <td>Get a list of all movies</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>JSON object holding data about all the movies</td>
+                </tr>
+
+                <tr>
+                    <td>Get all info (description, director, and image URL) on a movie by title</td>
+                    <td>/movies/:Title</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>JSON object holding data for movie that was requested</td>
+                </tr>
+
+                <tr>
+                    <td>Get info about movie director by name</td>
+                    <td>/movies/director/:Name</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>JSON object info about director such as a short bio and birth year</td>
+                </tr>
+
+                <tr>
+                    <td>Allow new users to register</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td>JSON object containing username, password, and email</td>
+                    <td>JSON object containing data of the user that was just added</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to update username</td>
+                    <td>/users/:username</td>
+                    <td>PUT</td>
+                    <td>JSON object with updated info</td>
+                    <td>JSON object with updated info</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to add movies to their favorite list</td>
+                    <td>/users/:Username/movies/:Title</td>
+                    <td>POST</td>
+                    <td>None</td>
+                    <td>A text saying that the movie has been added to favorites</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to remove movies from their favorites</td>
+                    <td>/users/:Username/movies/:Titler</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>A text saying that the movie has been deleted from their favorites</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to deactivate their account</td>
+                    <td>/users/:Username</td>
+                    <td>DELETED</td>
+                    <td>None</td>
+                    <td>A text stating that the user email/account has been removedand deactivated</td>
+                </tr>
+            </table>
+        </section>
     </body>
 </html>
