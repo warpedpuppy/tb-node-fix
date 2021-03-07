@@ -1,5 +1,6 @@
 const express = require('express'),
-    morgan = require('morgan');
+    morgan = require('morgan'),
+
 
 const app = express();
 
@@ -114,15 +115,37 @@ app.get('/', (req, res) => {
     res.send('Welcome to my Movie API!');
 });
 
-app.get('/documentation', (req, res) => {
-    res.sendFile('public/documentation.html', {root: __dirname});
-});
-
 app.get('/movies', (req, res) => {
-    res.json(topMovies);
+    res.send('Successful GET request returning data on all the movies');
 });
 
+app.get('/movies/:Title', (req, res) => {
+    res.send('Successful GET request returning data on specific movie');
+});
 
+app.get('/movies/director/:Name', (req, res) => {
+    res.send('Successful GET request returning data on movie director');
+});
+
+app.post('/users', (req, res) => {
+    res.send('Successful POST request - new user registered');
+});
+
+app.put('/users/:Username', (req, res) => {
+    res.send('Successful PUT request - new user updated');
+});
+
+app.post('/users/:Username/movies/:Title', (req, res) => {
+    res.send('Successful POST request - movie added to favorites');
+});
+
+app.delete('/users/:Username/movies/:Title', (req, res) => {
+    res.send('Successful DELETE request - movie removed');
+});
+
+app.delete('/users/:Usersname', (req, res) => {
+    res.send('Successful DELETE request - user deactivated');
+});
 
 // Listens for requests
 app.listen(8080, () => {
@@ -130,19 +153,4 @@ app.listen(8080, () => {
 });
 
 app.use(express.static('public'));
-
-const bodyParser = require('body-parser'),
-    methodOverride = require('method-override');
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-app.use(bodyParser.json());
-app.use(methodOverride());
-
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
 
