@@ -15,99 +15,129 @@ let topMovies = [
     {
         title: 'The Other Guys',
         director: 'Adam McKay',
+        genre: 'Comedy',
         releaseDate: '08/05/2010',
         rating: 'PG-13'
     },
     {
         title: '21 Jump Street',
         director: 'Phil Lord, Chris Miller',
+        genre: 'Comedy',
         releaseDate: '03/16/2012',
         rating: 'R'
     },
     {
         title: '22 Jump Street',
         director: 'Phil Lord, Chris Miller',
+        genre: 'Comedy',
         releaseDate: '06/13/2014',
         rating: 'R'
     },
     {
         title: 'Kingsman: The Secret Service',
         director: 'Matthew Vaughn',
+        genre: 'Comedy',
         releaseDate: '02/12/2015',
         rating: 'R'
     },
     {
         title: 'Kingsman: The Golden Circle',
         director: 'Matthew Vaughn',
+        genre: 'Comedy',
         releaseDate: '09/22/2017',
         rating: 'R'
     },
     {
         title: 'Rush Hour',
         director: 'Brett Ratner',
+        genre: 'Comedy',
         releaseDate: '09/18/1998',
         rating: 'PG-13'
     },
     {
         title: 'Rush Hour 2',
         director: 'Brett Ratner',
+        genre: 'Comedy',
         releaseDate: '08/03/2001',
         rating: 'PG-13'
     },
     {
         title: 'Rush Hour 3',
         director: 'Brett Ratner',
+        genre: 'Comedy',
         releaseDate: '08/10/2007',
         rating: 'PG-13'
     },
     {
         title: 'Central Intelligence',
         director: 'Rawson Marshall Thurber',
+        genre: 'Comedy',
         releaseDate: '06/10/2016',
         rating: 'PG-13'
     },
     {
         title: 'Spy',
         director: 'Paul Feig',
+        genre: 'Comedy',
         releaseDate: '06/05/2015',
         rating: 'R'
     },
     {
         title: 'Ride Along',
         director: 'Tim Story',
+        genre: 'Comedy',
         releaseDate: '01/17/2014',
         rating: 'PG-13'
     },
     {
         title: 'Ride Along 2',
         director: 'Tim Story',
+        genre: 'Comedy',
         releaseDate: '01/15/2016',
         rating: 'PG-13'
     },
     {
         title: 'Red',
         director: 'Robert Schwentke',
+        genre: 'Comedy',
         releaseDate: '10/15/2010',
         rating: 'PG-13'
     },
     {
         title: 'Red 2',
         director: 'Dean Parisot',
+        genre: 'Comedy',
         releaseDate: '07/19/2013',
         rating: 'PG-13'
     },
     {
         title: 'Get Smart',
         director: 'Peter Segal',
+        genre: 'Comedy',
         releaseDate: '06/20/2008',
         rating: 'PG-13'
     },
     {
         title: 'Killers',
         director: 'Robert Luketic',
+        genre: 'Comedy',
         releaseDate: '06/04/2010',
         rating: 'PG-13'
     },
+    {
+        title: 'The Avengers',
+        director: 'Joss Whedon',
+        genre: 'Adventure',
+        releaseDate: '05/04/2012',
+        rating: 'PG-13'
+    },
+    {
+        title: 'Guardians of the Galaxy',
+        director: 'James Gunn',
+        genre: 'Sci-fi',
+        releaseDate: '08/01/2014',
+        rating: 'PG-13'
+    }
 ];
 
 // GET Requests
