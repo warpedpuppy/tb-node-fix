@@ -1,8 +1,12 @@
+require('dotenv').config();
+
 const express = require('express'),
     morgan = require('morgan');
     // bodyParser = require('body-parser');
 
 const app = express();
+
+const Config = require('./config');
 
 app.use(express.json());
 
@@ -13,141 +17,18 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something is broken');
 });
 
-let topMovies = [
-    {
-        title: 'The Other Guys',
-        director: 'Adam McKay',
-        genre: 'Comedy',
-        releaseDate: '08/05/2010',
-        rating: 'PG-13'
-    },
-    {
-        title: '21 Jump Street',
-        director: 'Phil Lord, Chris Miller',
-        genre: 'Comedy',
-        releaseDate: '03/16/2012',
-        rating: 'R'
-    },
-    {
-        title: '22 Jump Street',
-        director: 'Phil Lord, Chris Miller',
-        genre: 'Comedy',
-        releaseDate: '06/13/2014',
-        rating: 'R'
-    },
-    {
-        title: 'Kingsman: The Secret Service',
-        director: 'Matthew Vaughn',
-        genre: 'Comedy',
-        releaseDate: '02/12/2015',
-        rating: 'R'
-    },
-    {
-        title: 'Kingsman: The Golden Circle',
-        director: 'Matthew Vaughn',
-        genre: 'Comedy',
-        releaseDate: '09/22/2017',
-        rating: 'R'
-    },
-    {
-        title: 'Rush Hour',
-        director: 'Brett Ratner',
-        genre: 'Comedy',
-        releaseDate: '09/18/1998',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Rush Hour 2',
-        director: 'Brett Ratner',
-        genre: 'Comedy',
-        releaseDate: '08/03/2001',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Rush Hour 3',
-        director: 'Brett Ratner',
-        genre: 'Comedy',
-        releaseDate: '08/10/2007',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Central Intelligence',
-        director: 'Rawson Marshall Thurber',
-        genre: 'Comedy',
-        releaseDate: '06/10/2016',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Spy',
-        director: 'Paul Feig',
-        genre: 'Comedy',
-        releaseDate: '06/05/2015',
-        rating: 'R'
-    },
-    {
-        title: 'Ride Along',
-        director: 'Tim Story',
-        genre: 'Comedy',
-        releaseDate: '01/17/2014',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Ride Along 2',
-        director: 'Tim Story',
-        genre: 'Comedy',
-        releaseDate: '01/15/2016',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Red',
-        director: 'Robert Schwentke',
-        genre: 'Comedy',
-        releaseDate: '10/15/2010',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Red 2',
-        director: 'Dean Parisot',
-        genre: 'Comedy',
-        releaseDate: '07/19/2013',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Get Smart',
-        director: 'Peter Segal',
-        genre: 'Comedy',
-        releaseDate: '06/20/2008',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Killers',
-        director: 'Robert Luketic',
-        genre: 'Comedy',
-        releaseDate: '06/04/2010',
-        rating: 'PG-13'
-    },
-    {
-        title: 'The Avengers',
-        director: 'Joss Whedon',
-        genre: 'Adventure',
-        releaseDate: '05/04/2012',
-        rating: 'PG-13'
-    },
-    {
-        title: 'Guardians of the Galaxy',
-        director: 'James Gunn',
-        genre: 'Sci-fi',
-        releaseDate: '08/01/2014',
-        rating: 'PG-13'
-    }
-];
+let auth = require('./auth')(app);
+
+const passport = require('passport');
+
+require('./passport');
 
 // GET Requests
 app.get('/', (req, res) => {
     res.status(200).send('Welcome to the myFlix API!');
 });
 
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(200).json(movies);
@@ -158,7 +39,7 @@ app.get('/movies', (req, res) => {
         });
 });
 
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({Title: req.params.Title})
         .then((movies) => {
             res.status(200).json(movies);
@@ -169,7 +50,7 @@ app.get('/movies/:Title', (req, res) => {
         });
 });
 
-app.get('/movies/genres/:Title', (req, res) => {
+app.get('/movies/genres/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({'Genre.Name': req.params.Title}, 'Genre')
         .then((genre) => {
             res.status(200).json(genre);
@@ -180,7 +61,7 @@ app.get('/movies/genres/:Title', (req, res) => {
         });
 });
 
-app.get('/movies/director/:Name', (req, res) => {
+app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.findOne({'Director.Name': req.params.Name}, 'Director')
         .then((director) => {
             res.status(200).json(director);
@@ -228,7 +109,7 @@ app.post('/users', (req, res) => {
         });
 });
 
-app.get('/users/:Username', (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOne({Username: req.params.Username})
         .then((user) => {
             res.status(200).json(user);
@@ -239,7 +120,7 @@ app.get('/users/:Username', (req, res) => {
         });
 });
 
-app.put('/users/:Username', (req, res) => {
+app.put('/users/:Username' , passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username},
         {
             $set:
@@ -260,7 +141,7 @@ app.put('/users/:Username', (req, res) => {
         });
 });
 
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username},
         {
             $push: {FavoriteMovies: req.params.MovieID}
@@ -276,7 +157,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
         });
 });
 
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username},
         {
             $pull: { FavoriteMovies: req.params.MovieID}
@@ -290,7 +171,7 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
         });
 });
 
-app.delete('/users/:Username', (req, res) => {
+app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username})
         .then((user) => {
             if (!user) {
@@ -306,7 +187,7 @@ app.delete('/users/:Username', (req, res) => {
 });
 
 // Listens for requests
-app.listen(8080, () => {
+app.listen(Config.PORT, () => {
     console.log('Your app is listening on port 8080.');
 });
 
@@ -314,8 +195,9 @@ app.use(express.static('public'));
 
 const mongoose = require('mongoose');
 const Models = require('./models.js');
+const { DB_CONNECT } = require('./config');
 
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(Config.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true});
