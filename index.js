@@ -1,10 +1,22 @@
 const express = require('express'),
-    morgan = require('morgan');
-    // bodyParser = require('body-parser');
+    morgan = require('morgan'),
+    app = express(),
+    Config = require('./config'),
+    passport = require('passport'),
+    cors = require('cors');
 
-const app = express();
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-const Config = require('./config');
+app.use(cors(
+    origin: (origin, callback) => {
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1) {
+            let message = "The CORS policy for this application doesn't allow access from origin " + origin;
+            return callback(new Error(message ), false);
+        }
+        return callback(null, true);
+    }
+));
 
 app.use(express.json());
 
@@ -16,8 +28,6 @@ app.use((err, req, res, next) => {
 });
 
 let auth = require('./auth')(app);
-
-const passport = require('passport');
 
 require('./passport');
 
@@ -191,11 +201,11 @@ app.listen(Config.PORT, () => {
 
 app.use(express.static('public'));
 
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-const { DB_CONNECT } = require('./config');
+const mongoose = require('mongoose'),
+    { DB_CONNECT } = require('./config'),
+    Models = require('./models.js'),
+    Movies = Models.Movie,
+    Users = Models.User;
 
-const Movies = Models.Movie;
-const Users = Models.User;
 
 mongoose.connect(Config.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true});
