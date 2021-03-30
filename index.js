@@ -3,7 +3,8 @@ const express = require('express'),
     app = express(),
     Config = require('./config'),
     passport = require('passport'),
-    cors = require('cors');
+    cors = require('cors'),
+    { check, validationResult } = require('express-validator');
 
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
@@ -91,7 +92,18 @@ app.get('/users', (req, res) => {
         });
 });
 
-app.post('/users', (req, res) => {
+app.post('/users', [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+    ], (req, res) => {
+    let errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array()});
+    }
+
     let hashedPassword = Users.hashedPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
         .then((user) => {
@@ -196,8 +208,8 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 // Listens for requests
-app.listen(Config.PORT, () => {
-    console.log('Your app is listening on port 8080.');
+app.listen(Config.PORT,'0.0.0.0', () => {
+    console.log('Listening on Port' + Config.PORT);
 });
 
 app.use(express.static('public'));
