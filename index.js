@@ -220,5 +220,6 @@ const mongoose = require('mongoose'),
     Movies = Models.Movie,
     Users = Models.User;
 
+// mongoose.connect(Config.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true});
 
-mongoose.connect(Config.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true});
