@@ -1,7 +1,7 @@
 const express = require('express'),
     morgan = require('morgan'),
     app = express(),
-    Config = require('./config'),
+    // Config = require('./config'),
     passport = require('passport'),
     cors = require('cors'),
     { check, validationResult } = require('express-validator');
@@ -226,18 +226,18 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 // Listens for requests
-app.listen(Config.PORT,'0.0.0.0', () => {
-    console.log('Listening on Port ' + Config.PORT);
+app.listen(8080,'0.0.0.0', () => {
+    console.log('Listening on Port 8080');
 });
 
 app.use(express.static('public'));
 
 const mongoose = require('mongoose'),
-    { DB_CONNECT } = require('./config'),
+    // { DB_CONNECT } = require('./config'),
     Models = require('./models.js'),
     Movies = Models.Movie,
     Users = Models.User;
 
 // mongoose.connect(Config.DB_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true});
 
-mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://127.0.0.1:27017/MyFlix", { useNewUrlParser: true, useUnifiedTopology: true});
