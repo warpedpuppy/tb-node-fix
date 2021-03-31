@@ -31,9 +31,10 @@ mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopol
 app.get('/', (req, res) => {
     res.status(200).send('Welcome to the myFlix API!');
 });
-passport.authenticate('jwt', { session: false }),
+
 app.get('/movies', (req, res) => {
-    Movies.find()
+    console.log(Movies)
+    Movies.create({Title: "my title", Description: "my description"})
         .then((movies) => {
             res.status(200).json(movies);
         })
@@ -41,6 +42,9 @@ app.get('/movies', (req, res) => {
             console.error(err);
             res.status(500).send('Error ' + err);
         });
+
+    Movies.find()
+    .then(res => console.log(res))
 });
 
 
