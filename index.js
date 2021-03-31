@@ -24,7 +24,6 @@ app.use((err, req, res, next) => {
 
 let auth = require('./auth')(app);
 require('./passport');
-console.log(Config.CONNECTION_URI);
 mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true})
 .then(res => console.log("successful db connect"))
 .catch(e => console.error("db connection failed"))
