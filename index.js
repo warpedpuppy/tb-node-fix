@@ -13,14 +13,7 @@ const express = require('express'),
 let allowedOrigins = ['http://localhost:8080', 'https://boemyflix.herokuapp.com/'];
 
 
-console.log(Config.CONNECTION_URI);
-mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true}, err => {
-    if (err) {
-        console.error('db conncetion error = ', err)
-    } else {
-        console.log("db good to go")
-    }
-});
+
 
 app.use(cors());
 app.use(express.static('public'));
@@ -33,6 +26,14 @@ app.use((err, req, res, next) => {
 
 let auth = require('./auth')(app);
 require('./passport');
+
+mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true}, err => {
+    if (err) {
+        console.error('db connection error')
+    } else {
+        console.log("db good to go")
+    }
+});
 
 // GET Requests
 app.get('/', (req, res) => {
