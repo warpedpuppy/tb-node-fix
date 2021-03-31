@@ -29,7 +29,7 @@ app.get('/movies',  (req, res) => {
 });
 
 // Listens for requests
-app.listen(8001, () => {
+app.listen(Config.PORT, () => {
     console.log('Listening on Port ' + Config.PORT);
 });
 
