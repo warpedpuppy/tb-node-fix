@@ -33,18 +33,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/movies', (req, res) => {
-    // Movies.create({Title: "my title", Description: "my description"})
-    //     .then((movies) => {
-    //         res.status(200).json(movies);
-    //     })
-    //     .catch((err) => {
-    //         console.error(err);
-    //         res.status(500).send('Error ' + err);
-    //     });
-
     Movies.find()
-    .then(movies => res.status(200).json(movies))
-    .catch(err => res.status(200).json(err))
+    .then(movies => res.status(204).json(movies))
+    .catch(err => res.status(206).json(err))
 });
 
 
