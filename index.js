@@ -14,7 +14,7 @@ let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 app.use(cors());
 
 mongoose.connect(Config.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true}, (err, data) => {
- if (!err) console.log("connected to db")
+ if (!err) {console.log("connected to db")} else {console.error(err)}
 });
 app.use(express.json());
 app.use(morgan('common'));
